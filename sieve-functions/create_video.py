@@ -26,6 +26,11 @@ gemini_client = openai.OpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
 )
 
+groq_client = openai.OpenAI(
+    api_key=os.getenv("GROQ_API_KEY"),
+    base_url="https://api.groq.com/openai/v1",
+)
+
 
 class Subtitle:
     def __init__(self, text: str, start: float, end: float):  # Changed str to float

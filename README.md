@@ -54,6 +54,7 @@ Create a `.env` file inside the `sieve-functions/` directory:
 
 ```
 OPENAI_KEY=your_openai_api_key_here
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
 ### 2. Install dependencies
@@ -84,5 +85,5 @@ sieve deploy create_video.py
 
 - Web UI is built with **Next.js**
 - Video analysis and segmentation is powered by a **Sieve function** (`create_video.py`)
-- Requires **Sieve** and **OpenAI** API keys
+- Requires **Sieve**, **OpenAI**, and **Groq** API keys
 - Simple local setup for development and deployment

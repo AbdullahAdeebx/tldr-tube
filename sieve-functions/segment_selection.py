@@ -18,6 +18,11 @@ gemini_client = openai.OpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
 )
 
+groq_client = openai.OpenAI(
+    api_key=os.getenv("GROQ_API_KEY"),
+    base_url="https://api.groq.com/openai/v1",
+)
+
 
 def get_adhd_length(adhd_level: Literal["relaxed", "normal", "hyper"]) -> str:
     if adhd_level == "normal":
@@ -72,8 +77,8 @@ SUMMARY_SYSTEM_PROMPT = """You are an AI summarizer, that takes in a transcript 
 
 def generate_summary(subtitles: List[Subtitle], title) -> str:
     joined_subs = "\n".join(f"{i + 1}. {obj.text}" for i, obj in enumerate(subtitles))
-    completion = openai_client.chat.completions.create(
-        model="gpt-4o",
+    completion = groq_client.chat.completions.create(
+        model="meta-llama/llama-4-maverick-17b-128e-instruct",
         messages=[
             {
                 "role": "user",
@@ -167,9 +172,10 @@ def pick_segments(
 
     def _call_model(batch: List[Tuple[int, Subtitle]], chunk_num: int) -> List[int]:
         prompt = _build_prompt(batch, chunk_num)
-        completion = openai_client.chat.completions.create(
+        completion = groq_client.chat.completions.create(
+            model="meta-llama/llama-4-maverick-17b-128e-instruct",
             # model="gemini-2.5-flash-preview-04-17",
-            model="gpt-4o",
+            # model="gpt-4o",
             # model="gemini-2.5-pro-preview-05-06",
             # reasoning_effort="medium",
             messages=[

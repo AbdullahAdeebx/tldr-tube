@@ -64,9 +64,10 @@ def filter_included(included_indicies: List[int], len_subs: int) -> List[int]:
 def merge_subtitles(
     subtitles: List[Subtitle], include_indices: List[int]
 ) -> List[Subtitle]:
-    subtitles = filter_included(include_indices, len(subtitles))
+    # Filter out indices that are out of the range of the subtitles list
+    valid_indices = filter_included(include_indices, len(subtitles))
     included = sorted(
-        [subtitles[i] for i in sorted(set(include_indices))], key=lambda s: s.start
+        [subtitles[i] for i in sorted(set(valid_indices))], key=lambda s: s.start
     )
 
     if not included:
